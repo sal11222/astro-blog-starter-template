@@ -55,6 +55,20 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build && npm run deploy` | Deploy your production site to Cloudflare        |
 | `npm wrangler tail`               | View real-time logs for all Workers              |
 
+## 🏢 Organization Profile API
+
+The site exposes a server-rendered endpoint at `/api/organization-profile` that fetches your [Cloudflare organization profile](https://developers.cloudflare.com/fundamentals/organizations/) (currently in Public Beta) using the [Cloudflare TypeScript SDK](https://github.com/cloudflare/cloudflare-typescript) and returns it as JSON (business name, address, email, phone, and external metadata).
+
+It requires three secrets, set with [`wrangler secret put`](https://developers.cloudflare.com/workers/configuration/secrets/) (or a local `.dev.vars` file during development):
+
+```bash
+npx wrangler secret put CLOUDFLARE_EMAIL           # email of your Cloudflare account
+npx wrangler secret put CLOUDFLARE_API_KEY         # your Global API Key
+npx wrangler secret put CLOUDFLARE_ORGANIZATION_ID # ID of the organization to look up
+```
+
+If any of these are missing, the endpoint responds with `503` and a descriptive error message.
+
 ## 👀 Want to learn more?
 
 Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
